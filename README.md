@@ -31,7 +31,7 @@ Config is a poor mans INI file:
 
 Notes:
 
-- Browser paths must be exact paths to exes with no arguments. Values do not need to be quoted.
+- Browser paths must be exact paths to exes with no arguments (or in `PATH`). Values do not need to be quoted.
 - Only * is treated as a special character in URL patterns, and matches any characters.
 - Only the domain part (or IP address) of a URL is checked.
 - There is no implied wildcard at the start or end, so you must include these if you need them, but be aware that "microsoft.*" will not only match "microsoft.com" and "microsoft.co.uk" but also "microsoft.somethingelse.com".
