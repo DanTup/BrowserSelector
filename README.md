@@ -9,8 +9,8 @@ Small utility to launch a different browser depending on the domain of the url b
 1. Grab the [latest release](https://github.com/DanTup/BrowserSelector/releases) and extract to a folder somewhere on your PC.
 2. Open the BrowserSelector.ini file and customise paths to your browsers and domain patterns (see below).
 3. Run `BrowserSelector.exe --register` from this folder to register the tool in Windows as a web browser.
-4. Open the "Choose a default browser" screen in Windows (you can simply search for "default browser" from the start screen)5
-5. Select DanTup.BrowserSelector as the default browser
+4. Open the "Choose a default browser" screen in Windows (you can simply search for "default browser" from the start screen).
+5. Select DanTup.BrowserSelector as the default browser.
 
 ## Config
 
