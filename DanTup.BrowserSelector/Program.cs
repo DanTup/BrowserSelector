@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Reflection;
+using System.Security.Principal;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -16,9 +18,15 @@ namespace DanTup.BrowserSelector
 		static bool HandleArg(string arg)
 		{
 			if (string.Equals(arg, "--register", StringComparison.OrdinalIgnoreCase))
+			{
+				EnsureAdmin(arg);
 				RegistrySettings.RegisterBrowser();
+			}
 			else if (string.Equals(arg, "--unregister", StringComparison.OrdinalIgnoreCase))
+			{
+				EnsureAdmin(arg);
 				RegistrySettings.UnregisterBrowser();
+			}
 			else if (arg.StartsWith("http://", StringComparison.OrdinalIgnoreCase) || arg.StartsWith("https://", StringComparison.OrdinalIgnoreCase) || arg.StartsWith("ftp://", StringComparison.OrdinalIgnoreCase))
 				LaunchBrowser(arg);
 			else
@@ -42,6 +50,22 @@ namespace DanTup.BrowserSelector
 
 Once you have registered the app as a browser, you should use visit ""Set Default Browser"" in Windows to set this app as the default browser.");
 		}
+
+		static void EnsureAdmin(string arg)
+		{
+			WindowsPrincipal principal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
+			if (!principal.IsInRole(WindowsBuiltInRole.Administrator))
+			{
+				Process.Start(new ProcessStartInfo
+				{
+					FileName = Assembly.GetExecutingAssembly().Location,
+					Verb = "runas",
+					Arguments = arg
+				});
+				Environment.Exit(0);
+			}
+		}
+
 
 		static void LaunchBrowser(string url)
 		{
