@@ -18,7 +18,9 @@ Config is a poor mans INI file:
 
 	; Default browser is first in list
 	[browsers]
+	edge = edge
 	chrome = C:\Program Files (x86)\Google\Chrome\Application\chrome.exe
+	ff = C:\Program Files (x86)\Mozilla Firefox\firefox.exe
 	ie = iexplore.exe
 
 	; Url preferences.
@@ -28,10 +30,12 @@ Config is a poor mans INI file:
 	[urls]
 	microsoft.com = ie
 	*.microsoft.com = ie
+	google.com = chrome
+	visualstudio.com = edge
 
 Notes:
 
-- Browser paths must be exact paths to exes with no arguments (or in `PATH`). Values do not need to be quoted.
+- Browser paths must be exact paths to exes with no arguments (or in `PATH`). Values do not need to be quoted. For Microsoft Edge just use "edge".
 - Only * is treated as a special character in URL patterns, and matches any characters.
 - Only the domain part (or IP address) of a URL is checked.
 - There is no implied wildcard at the start or end, so you must include these if you need them, but be aware that "microsoft.*" will not only match "microsoft.com" and "microsoft.co.uk" but also "microsoft.somethingelse.com".

@@ -9,7 +9,10 @@ namespace DanTup.BrowserSelector
 {
 	class Program
 	{
-		static void Main(string[] args)
+	    private const string EdgeLocation = "edge";
+	    private const string EdgeStartCommand = "microsoft-edge:";
+
+        static void Main(string[] args)
 		{
 			if (args == null || args.Length != 1 || !HandleArg(args[0]))
 				ShowHelpInfo();
@@ -85,8 +88,15 @@ Once you have registered the app as a browser, you should use visit ""Set Defaul
 
 					if (Regex.IsMatch(domain, pattern))
 					{
-						Process.Start(preference.Browser.Location, url);
-						return;
+					    if (preference.Browser.Location == EdgeLocation)
+					    {
+                            Process.Start(string.Format("{0}{1}", EdgeStartCommand, url));
+                        }
+					    else
+					    {
+					        Process.Start(preference.Browser.Location, url);
+					    }
+					    return;
 					}
 				}
 
