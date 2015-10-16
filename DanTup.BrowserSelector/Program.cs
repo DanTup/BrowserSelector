@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using System.Security.Principal;
@@ -9,7 +10,12 @@ namespace DanTup.BrowserSelector
 {
 	class Program
 	{
-		static void Main(string[] args)
+        static readonly Dictionary<string, string> SpecialCommands = new Dictionary<string, string>
+	    {
+	        {"edge", "microsoft-edge:{0}"}
+	    };
+
+        static void Main(string[] args)
 		{
 			if (args == null || args.Length != 1 || !HandleArg(args[0]))
 				ShowHelpInfo();
@@ -85,8 +91,11 @@ Once you have registered the app as a browser, you should use visit ""Set Defaul
 
 					if (Regex.IsMatch(domain, pattern))
 					{
-						Process.Start(preference.Browser.Location, url);
-						return;
+					    if (SpecialCommands.ContainsKey(preference.Browser.Name))
+					        Process.Start(string.Format(SpecialCommands[preference.Browser.Name], url));
+					    else
+					        Process.Start(preference.Browser.Location, url);
+					    return;
 					}
 				}
 
