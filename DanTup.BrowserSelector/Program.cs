@@ -10,18 +10,13 @@ namespace DanTup.BrowserSelector
 {
 	class Program
 	{
-        static readonly Dictionary<string, string> SpecialCommands = new Dictionary<string, string>
-	    {
-	        {"edge", "microsoft-edge:{0}"}
-	    };
-
-        static void Main(string[] args)
+		static void Main( string[] args )
 		{
 			if (args == null || args.Length != 1 || !HandleArg(args[0]))
 				ShowHelpInfo();
 		}
 
-		static bool HandleArg(string arg)
+		static bool HandleArg( string arg )
 		{
 			if (string.Equals(arg, "--register", StringComparison.OrdinalIgnoreCase))
 			{
@@ -57,7 +52,7 @@ namespace DanTup.BrowserSelector
 Once you have registered the app as a browser, you should use visit ""Set Default Browser"" in Windows to set this app as the default browser.");
 		}
 
-		static void EnsureAdmin(string arg)
+		static void EnsureAdmin( string arg )
 		{
 			WindowsPrincipal principal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
 			if (!principal.IsInRole(WindowsBuiltInRole.Administrator))
@@ -73,29 +68,64 @@ Once you have registered the app as a browser, you should use visit ""Set Defaul
 		}
 
 
-		static void LaunchBrowser(string url)
+		static void LaunchBrowser( string url )
 		{
 			try
 			{
 				var urlPreferences = ConfigReader.GetUrlPreferences();
+				string _url = url;
+				Uri uri = new Uri(_url);
+
+				string pattern;
+				string domain = "", urlPattern;
 
 				foreach (var preference in urlPreferences)
 				{
-					// Escape the input for regex; the only special character we support is a *
-					var regex = Regex.Escape(preference.UrlPattern);
-					// Unescape * as a wildcard.
-					var pattern = string.Format("^{0}$", regex.Replace("\\*", ".*"));
+					urlPattern = preference.UrlPattern;
 
-					// We're only checking the domain.
-					var domain = new Uri(url).Authority;
+					if (urlPattern.StartsWith("/") && urlPattern.EndsWith("/"))
+					{
+						// The domain from the INI file is a regex..
+						domain = uri.Authority + uri.AbsolutePath;
+						pattern = urlPattern.Substring(1, urlPattern.Length - 2);
+					}
+					else
+					{
+						// We're only checking the domain.
+						domain = uri.Authority;
+
+						// Escape the input for regex; the only special character we support is a *
+						var regex = Regex.Escape(urlPattern);
+						// Unescape * as a wildcard.
+						pattern = string.Format("^{0}$", regex.Replace("\\*", ".*"));
+					}
 
 					if (Regex.IsMatch(domain, pattern))
 					{
-					    if (SpecialCommands.ContainsKey(preference.Browser.Name))
-					        Process.Start(string.Format(SpecialCommands[preference.Browser.Name], url));
-					    else
-					        Process.Start(preference.Browser.Location, url);
-					    return;
+						string loc = preference.Browser.Location;
+						if (loc.IndexOf("{url}") > -1)
+						{
+							loc = loc.Replace("{url}", _url);
+							_url = "";
+						}
+						if (loc.StartsWith("\"") && loc.IndexOf('"', 2) > -1)
+						{
+							// Assume the quoted item is the executable, while everything
+							// after (the second quote), is part of the command-line arguments.
+							loc = loc.Substring(1);
+							int pos = loc.IndexOf('"');
+							string args = loc.Substring(pos + 1).Trim();
+							loc = loc.Substring(0, pos).Trim();
+							Process.Start(loc, args + " " + _url);
+						}
+						else
+						{
+							// The browser specified in the INI file is a single executable
+							// without any other arguments.
+							// (normal/original behavior)
+							Process.Start(loc, _url);
+						}
+						return;
 					}
 				}
 
