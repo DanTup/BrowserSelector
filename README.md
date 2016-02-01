@@ -48,19 +48,26 @@ Config is a poor mans INI file:
 
 ### Browsers
 
+	chrome = C:\Program Files (x86)\Google\Chrome\Application\chrome.exe
+	chrome_prof8 = "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --profile-directory="Profile 8"
+
 - Browser exes must be exact paths to the browser executable.
-- Arguments are optional. However, if you provide arguments the exe _must_ be enclosed in quotes. If there are no arguments, then the exe paths do not need to be quoted.
+- Arguments are optional. However, if you provide arguments the exe _must_ be enclosed in quotes.
+- If there are no arguments, then the exe paths do not need to be quoted.
 
-Special cases:
+**Special cases:**
 
-- For special exe paths, you can append the `{url}` flag to its path. This is required when specifying UWP app's such as Microsoft Edge (see example above). This allows better control over the browser command-line arguments.
-- By default, the url used as the first argument to the exe. If the `{url}` is specified, it will not be added to the arguments.
+	edge = microsoft-edge:{url}
+
+- For special browsers, you can include the `{url}` flag. This allows better control over the browser command-line arguments.
+- This is required when specifying UWP app's such as Microsoft Edge.
+- By default, the url is used as an argument when launching the exe. If the `{url}` flag is specified, it will not be added to the arguments. (In other words, it _won't_ be added twice..)
 
 ### Urls
 
 There are two ways to specify an Url. You can use simple wildcards or full regular expressions.
 
-#### Simple wildcards:
+**Simple wildcards:**
 
 	microsoft.com = ie
 	*.microsoft.com = ie
@@ -69,7 +76,7 @@ There are two ways to specify an Url. You can use simple wildcards or full regul
 - Only the domain part (or IP address) of a URL is checked.
 - There is no implied wildcard at the start or end, so you must include these if you need them, but be aware that "microsoft.*" will not only match "microsoft.com" and "microsoft.co.uk" but also "microsoft.somethingelse.com".
 
-#### Full regular expressions:
+**Full regular expressions:**
 
 	/sites\.google\.com/a/myproject.live\.com/ = chrome_prof8
 
