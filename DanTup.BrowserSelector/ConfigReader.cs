@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
+using System.Windows.Forms;
 
 namespace DanTup.BrowserSelector
 {
@@ -11,7 +13,7 @@ namespace DanTup.BrowserSelector
 		/// <summary>
 		/// Config lives in the same folder as the EXE, name "BrowserSelector.ini".
 		/// </summary>
-		static string ConfigPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "BrowserSelector.ini");
+		public static string ConfigPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "BrowserSelector.ini");
 
 		static internal IEnumerable<UrlPreference> GetUrlPreferences()
 		{
@@ -61,6 +63,58 @@ namespace DanTup.BrowserSelector
 		{
 			var parts = configLine.Split(new[] { '=' }, 2);
 			return new KeyValuePair<string, string>(parts[0].Trim(), parts[1].Trim());
+		}
+
+		public static void CreateSampleIni()
+		{
+			Assembly assembly;
+			Stream stream;
+			StringBuilder result;
+
+			assembly = Assembly.GetExecutingAssembly();
+			//stream = assembly.GetManifestResourceStream("DanTup.BrowserSelector.BrowserSelector.ini");
+			stream = assembly.GetManifestResourceStream(assembly.GetManifestResourceNames()[0]);
+			if (stream == null)
+			{
+				return;
+			}
+
+			result = new StringBuilder();
+
+			using (StreamReader reader = new StreamReader(stream))
+			{
+				result.Append(reader.ReadToEnd());
+				reader.Close();
+			}
+
+			if (result.Length > 0)
+			{
+				if (File.Exists(ConfigPath))
+				{
+					string newName = GetBackupFileName(ConfigPath);
+					File.Move(ConfigPath, newName);
+				}
+
+				File.WriteAllText(ConfigPath, result.ToString());
+			}
+		}
+
+		static string GetBackupFileName(string fileName)
+		{
+			string newName;
+			string fname;
+			string fext;
+			int index = 0;
+
+			fname = Path.GetDirectoryName(fileName) + "\\" + Path.GetFileNameWithoutExtension(fileName);
+			fext = Path.GetExtension(fileName);
+
+			do
+			{
+				newName = string.Format("{0}.{1:0000}{2}", fname, ++index, fext);
+			} while (File.Exists(newName));
+
+			return newName;
 		}
 	}
 

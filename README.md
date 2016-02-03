@@ -2,11 +2,6 @@
 
 Small utility to launch a different browser depending on the domain of the url being launched.
 
-So far, it has been tested on the following:
-
-* Windows 8.1
-* Windows 10 Pro
-
 ## Setting Up
 
 1. Grab the [latest release](https://github.com/DanTup/BrowserSelector/releases) and extract to a folder somewhere on your PC.
@@ -14,6 +9,43 @@ So far, it has been tested on the following:
 3. Run `BrowserSelector.exe --register` from this folder to register the tool in Windows as a web browser.
 4. Open the "Choose a default browser" screen in Windows (you can simply search for "default browser" from the start screen).
 5. Select DanTup.BrowserSelector as the default browser.
+
+So far, it has been tested on the following:
+
+* Windows 8.1
+* Windows 10 Pro
+
+## Usage
+
+    BrowserSelector.exe --register
+        Register as web browser
+
+    BrowserSelector.exe --unregister
+        Unregister as web browser
+
+    BrowserSelector.exe --create
+        Creates a default/sample settings file
+
+    BrowserSelector.exe "http://example.org/"
+        Launch example.org
+
+    BrowserSelector.exe [--wait] "http://example.org/"
+        Launch example.org, optionally waiting for the browser to close..
+
+    BrowserSelector.exe "http://example.org/" "http://example.com/" [...]
+        Launches multiple urls
+
+    BrowserSelector.exe "my bookmark file.url"
+        Launches the URL specified in the .url file.
+
+    BrowserSelector.exe "my bookmark file.webloc"
+        Launches the URL specified in the .webloc (osx) file.
+
+If you use the --wait flag with multiple urls/files each will open one after the other, in order. Each waits for the previous to close before opening. Using the --wait flag is tricky, though, since many (most) browsers open new urls as a new tab in an existing instance.
+
+To open multiple urls at the same time and wait for them, try the following:
+
+    BrowserSelector.exe "url-or-file" "url-or-file" --wait "url-or-file"
 
 ## Config
 
