@@ -63,7 +63,7 @@ namespace DanTup.BrowserSelector
 				}
 				else
 				{
-					if (arg.EndsWith(".url", StringComparison.InvariantCultureIgnoreCase))
+					if (arg.EndsWith(".url", StringComparison.InvariantCultureIgnoreCase) || arg.EndsWith(".website", StringComparison.InvariantCultureIgnoreCase))
 					{
 						LaunchUrlFile(arg, waitForClose);
 					}
@@ -140,7 +140,6 @@ To open multiple urls at the same time and wait for them, try the following:
 		static void LaunchUrlFile(string file, bool waitForClose = false)
 		{
 			string url = "";
-			bool firstLine = true;
 			string[] lines;
 
 			if (!File.Exists(file))
@@ -158,15 +157,6 @@ To open multiple urls at the same time and wait for them, try the following:
 
 			foreach (string l in lines)
 			{
-				if (firstLine)
-				{
-					if (!l.Trim().Equals("[InternetShortcut]", StringComparison.InvariantCultureIgnoreCase))
-					{
-						MessageBox.Show("Invalid .url file format.", "BrowserSelector", MessageBoxButtons.OK, MessageBoxIcon.Error);
-						break;
-					}
-					firstLine = false;
-				}
 				if (l.StartsWith("URL=", StringComparison.InvariantCulture))
 				{
 					url = l.Substring(4);
@@ -177,6 +167,10 @@ To open multiple urls at the same time and wait for them, try the following:
 			if (url.Length > 0)
 			{
 				LaunchBrowser(url);
+			}
+			else
+			{
+				MessageBox.Show("Invalid shortcut file format.", "BrowserSelector", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 		}
 
