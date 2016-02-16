@@ -63,17 +63,17 @@ namespace DanTup.BrowserSelector
 				}
 				else
 				{
-					if (arg.EndsWith(".url", StringComparison.InvariantCultureIgnoreCase) || arg.EndsWith(".website", StringComparison.InvariantCultureIgnoreCase))
+					if (arg.StartsWith("http://", StringComparison.OrdinalIgnoreCase) || arg.StartsWith("https://", StringComparison.OrdinalIgnoreCase) || arg.StartsWith("ftp://", StringComparison.OrdinalIgnoreCase))
+					{
+						LaunchBrowser(arg, waitForClose);
+					}
+					else if (arg.EndsWith(".url", StringComparison.InvariantCultureIgnoreCase) || arg.EndsWith(".website", StringComparison.InvariantCultureIgnoreCase))
 					{
 						LaunchUrlFile(arg, waitForClose);
 					}
 					else if (arg.EndsWith(".webloc", StringComparison.InvariantCultureIgnoreCase))
 					{
 						LaunchWeblocFile(arg, waitForClose);
-					}
-					else if (arg.StartsWith("http://", StringComparison.OrdinalIgnoreCase) || arg.StartsWith("https://", StringComparison.OrdinalIgnoreCase) || arg.StartsWith("ftp://", StringComparison.OrdinalIgnoreCase))
-					{
-						LaunchBrowser(arg, waitForClose);
 					}
 					else
 					{
