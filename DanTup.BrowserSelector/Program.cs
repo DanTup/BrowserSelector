@@ -37,13 +37,13 @@ namespace DanTup.BrowserSelector
 				{
 					if (string.Equals(arg, "register", StringComparison.OrdinalIgnoreCase))
 					{
-						EnsureAdmin(arg);
+						EnsureAdmin("--" + arg);
 						RegistrySettings.RegisterBrowser();
 						return;
 					}
 					else if (string.Equals(arg, "unregister", StringComparison.OrdinalIgnoreCase))
 					{
-						EnsureAdmin(arg);
+						EnsureAdmin("--" + arg);
 						RegistrySettings.UnregisterBrowser();
 						return;
 					}
