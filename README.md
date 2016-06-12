@@ -2,6 +2,8 @@
 
 Small utility to launch a different browser depending on the domain of the url being launched.
 
+> **[Read the blog post about this here](http://blog.dantup.com/2015/09/simple-windows-browser-selector/)**.
+
 ## Setting Up
 
 1. Grab the [latest release](https://github.com/DanTup/BrowserSelector/releases) and extract to a folder somewhere on your PC.
