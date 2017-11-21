@@ -63,9 +63,12 @@ namespace DanTup.BrowserSelector
 				}
 				else
 				{
-					if (arg.StartsWith("http://", StringComparison.OrdinalIgnoreCase) || arg.StartsWith("https://", StringComparison.OrdinalIgnoreCase) || arg.StartsWith("ftp://", StringComparison.OrdinalIgnoreCase))
+					if (arg.StartsWith("http:", StringComparison.OrdinalIgnoreCase) 
+                        || arg.StartsWith("https:", StringComparison.OrdinalIgnoreCase) 
+                        || arg.StartsWith("ftp:", StringComparison.OrdinalIgnoreCase))
 					{
-						LaunchBrowser(arg, waitForClose);
+                        var url = UrlFixes.AddMissedSlashesAfterProtocol(arg);
+						LaunchBrowser(url, waitForClose);
 					}
 					else if (arg.EndsWith(".url", StringComparison.InvariantCultureIgnoreCase) || arg.EndsWith(".website", StringComparison.InvariantCultureIgnoreCase))
 					{
