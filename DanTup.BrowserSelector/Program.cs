@@ -21,7 +21,7 @@ namespace DanTup.BrowserSelector
 
 			if (args == null || args.Length == 0)
 			{
-				ShowHelpInfo();
+				ShowHelpInfo("No arguments were passed to BrowserSelector");
 				return;
 			}
 
@@ -77,16 +77,17 @@ namespace DanTup.BrowserSelector
 					}
 					else
 					{
-						ShowHelpInfo();
+						ShowHelpInfo("The passed argument wasn't recognized as a valid url: " + arg);
 						return;
 					}
 				}
 			}
 		}
 
-		static void ShowHelpInfo()
+		static void ShowHelpInfo(string noArgumentReasonDescription = null)
 		{
-			MessageBox.Show(@"Usage:
+            var preMessage = string.IsNullOrEmpty(noArgumentReasonDescription) ? null : noArgumentReasonDescription + "\r\n\r\n";
+            MessageBox.Show(preMessage + @"Usage:
 
     BrowserSelector.exe --register
         Register as web browser
