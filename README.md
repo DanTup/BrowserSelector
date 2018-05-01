@@ -1,3 +1,5 @@
+> NOTE: This software is not being actively developed or maintained.
+
 # Browser Selector [![Build status](https://ci.appveyor.com/api/projects/status/github/DanTup/BrowserSelector?svg=true)](https://ci.appveyor.com/project/DanTup/browserselector)
 
 Small utility to launch a different browser depending on the domain of the url being launched.
