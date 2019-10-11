@@ -55,32 +55,34 @@ To open multiple urls at the same time and wait for them, try the following:
 
 Config is a poor mans INI file:
 
-	; Default browser is first in list
-	; Use `{url}` to specify UWP app browser details
-	[browsers]
-	chrome = C:\Program Files (x86)\Google\Chrome\Application\chrome.exe
-	ff = C:\Program Files (x86)\Mozilla Firefox\firefox.exe
-	edge = microsoft-edge:{url}
-	ie = iexplore.exe
-	chrome_prof8 = "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --profile-directory="Profile 8"
+```ini
+; Default browser is first in list
+; Use `{url}` to specify UWP app browser details
+[browsers]
+chrome = C:\Program Files (x86)\Google\Chrome\Application\chrome.exe
+ff = C:\Program Files (x86)\Mozilla Firefox\firefox.exe
+edge = microsoft-edge:{url}
+ie = iexplore.exe
+chrome_prof8 = "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --profile-directory="Profile 8"
 
-	; Url preferences.
-	; Only * is treated as a special character (wildcard).
-	; Matches are domain-only. Protocols and paths are ignored.
-	; Use "*.blah.com" for subdomains, not "*blah.com" as that would also match "abcblah.com".
-	[urls]
-	microsoft.com = ie
-	*.microsoft.com = ie
-	
-	; Use my project-based Chrome profile
-	myproject.live = chrome_prof8
-	myproject.local = chrome_prof8
-	
-	; if the key is wrapped in /'s, it is treated as a regex.
-	/sites\.google\.com/a/myproject.live\.com/ = chrome_prof8
-	
-	google.com = chrome
-	visualstudio.com = edge
+; Url preferences.
+; Only * is treated as a special character (wildcard).
+; Matches are domain-only. Protocols and paths are ignored.
+; Use "*.blah.com" for subdomains, not "*blah.com" as that would also match "abcblah.com".
+[urls]
+microsoft.com = ie
+*.microsoft.com = ie
+
+; Use my project-based Chrome profile
+myproject.live = chrome_prof8
+myproject.local = chrome_prof8
+
+; if the key is wrapped in /'s, it is treated as a regex.
+/sites\.google\.com/a/myproject.live\.com/ = chrome_prof8
+
+google.com = chrome
+visualstudio.com = edge
+```
 
 ### Browsers
 
@@ -113,9 +115,9 @@ There are two ways to specify an Url. You can use simple wildcards or full regul
 - There is no implied wildcard at the start or end, so you must include these if you need them, but be aware that "microsoft.*" will not only match "microsoft.com" and "microsoft.co.uk" but also "microsoft.somethingelse.com".
 
 **Full regular expressions:**
-
+```regex
 	/sites\.google\.com/a/myproject.live\.com/ = chrome_prof8
-
+```
 - Full regular expressions are specified by wrapping it in /'s.
 - The domain _and_ path are used in the Url comparison.
 - The regular expression syntax is based on the Microsoft .NET implementation.
