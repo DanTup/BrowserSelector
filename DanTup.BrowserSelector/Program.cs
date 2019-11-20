@@ -21,7 +21,7 @@ namespace DanTup.BrowserSelector
 
 			if (args == null || args.Length == 0)
 			{
-				ShowHelpInfo();
+				ShowHelpInfo("No arguments were passed to BrowserSelector");
 				return;
 			}
 
@@ -63,9 +63,12 @@ namespace DanTup.BrowserSelector
 				}
 				else
 				{
-					if (arg.StartsWith("http://", StringComparison.OrdinalIgnoreCase) || arg.StartsWith("https://", StringComparison.OrdinalIgnoreCase) || arg.StartsWith("ftp://", StringComparison.OrdinalIgnoreCase))
+					if (arg.StartsWith("http:", StringComparison.OrdinalIgnoreCase) 
+                        || arg.StartsWith("https:", StringComparison.OrdinalIgnoreCase) 
+                        || arg.StartsWith("ftp:", StringComparison.OrdinalIgnoreCase))
 					{
-						LaunchBrowser(arg, waitForClose);
+                        var url = UrlFixes.AddMissedSlashesAfterProtocol(arg);
+						LaunchBrowser(url, waitForClose);
 					}
 					else if (arg.EndsWith(".url", StringComparison.InvariantCultureIgnoreCase) || arg.EndsWith(".website", StringComparison.InvariantCultureIgnoreCase))
 					{
@@ -77,16 +80,17 @@ namespace DanTup.BrowserSelector
 					}
 					else
 					{
-						ShowHelpInfo();
+						ShowHelpInfo("The passed argument wasn't recognized as a valid url: " + arg);
 						return;
 					}
 				}
 			}
 		}
 
-		static void ShowHelpInfo()
+		static void ShowHelpInfo(string noArgumentReasonDescription = null)
 		{
-			MessageBox.Show(@"Usage:
+            var preMessage = string.IsNullOrEmpty(noArgumentReasonDescription) ? null : noArgumentReasonDescription + "\r\n\r\n";
+            MessageBox.Show(preMessage + @"Usage:
 
     BrowserSelector.exe --register
         Register as web browser
