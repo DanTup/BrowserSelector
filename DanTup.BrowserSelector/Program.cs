@@ -230,7 +230,7 @@ To open multiple urls at the same time and wait for them, try the following:
 					if (urlPattern.StartsWith("/") && urlPattern.EndsWith("/"))
 					{
 						// The domain from the INI file is a regex..
-						domain = uri.Authority + uri.AbsolutePath;
+						domain = uri.Authority + uri.PathAndQuery;
 						pattern = urlPattern.Substring(1, urlPattern.Length - 2);
 					}
 					else
