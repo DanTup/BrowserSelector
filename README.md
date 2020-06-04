@@ -1,6 +1,6 @@
-> NOTE: This software is not being actively developed or maintained.
+> NOTE: This is a clone of [DanTup/BrowserSelector](https://github.com/DanTup/BrowserSelector) enhanced by comparing the full URI (including query part) against a regex pattern.
 
-# Browser Selector [![Build status](https://ci.appveyor.com/api/projects/status/github/DanTup/BrowserSelector?svg=true)](https://ci.appveyor.com/project/DanTup/browserselector)
+# Browser Selector [![Build status](https://ci.appveyor.com/api/projects/status/github/pstodulka/BrowserSelector?svg=true)](https://ci.appveyor.com/project/pstodulka/browserselector)
 
 Small utility to launch a different browser depending on the domain of the url being launched.
 
@@ -8,7 +8,7 @@ Small utility to launch a different browser depending on the domain of the url b
 
 ## Setting Up
 
-1. Grab the [latest release](https://github.com/DanTup/BrowserSelector/releases) and extract to a folder somewhere on your PC.
+1. Grab the [latest release](https://github.com/pstodulka/BrowserSelector/releases) and extract to a folder somewhere on your PC.
 2. Open the BrowserSelector.ini file and customise paths to your browsers and domain patterns (see below).
 3. Run `BrowserSelector.exe --register` from this folder to register the tool in Windows as a web browser.
 4. Open the "Choose a default browser" screen in Windows (you can simply search for "default browser" from the start screen).
