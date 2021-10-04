@@ -123,3 +123,4 @@ There are two ways to specify an Url. You can use simple wildcards or full regul
 - Full regular expressions are specified by wrapping it in /'s.
 - The domain _and_ path are used in the Url comparison.
 - The regular expression syntax is based on the Microsoft .NET implementation.
+-
