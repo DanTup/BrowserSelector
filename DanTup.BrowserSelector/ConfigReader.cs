@@ -10,6 +10,7 @@ namespace DanTup.BrowserSelector
 {
 	static class ConfigReader
 	{
+		public const string t = "t";
 		/// <summary>
 		/// Config lives in the same folder as the EXE, name "BrowserSelector.ini".
 		/// </summary>
