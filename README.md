@@ -1,4 +1,4 @@
-> NOTE: This software is not being actively developed or maintained.
+> NOTE: This software is not being actively developed or maintained. Some fork (such as [slater1/BrowseRouter](https://github.com/slater1/BrowseRouter) may be more up-to-date).
 
 # Browser Selector [![Build status](https://ci.appveyor.com/api/projects/status/github/DanTup/BrowserSelector?svg=true)](https://ci.appveyor.com/project/DanTup/browserselector)
 
